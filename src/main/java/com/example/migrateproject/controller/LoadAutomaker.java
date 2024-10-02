@@ -3,17 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller;
+package com.example.migrateproject.controller;
 
-import dao.AutomakerDAO;
+import com.example.migrateproject.dao.AutomakerDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import model.Automaker;
+
+import com.example.migrateproject.model.Automaker;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -56,8 +57,8 @@ public class LoadAutomaker extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        AutomakerDAO dao=new AutomakerDAO();
-        ArrayList<Automaker> listAutomaker=dao.getAllAutomaker();
+        AutomakerDAO dao= new AutomakerDAO();
+        ArrayList<Automaker> listAutomaker = dao.getAllAutomaker();
         request.setAttribute("listAutomaker", listAutomaker);
         request.getRequestDispatcher("/hondaotog3.com/index.jsp").forward(request, response);
     } 

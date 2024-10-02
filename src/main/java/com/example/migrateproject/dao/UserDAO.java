@@ -2,23 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dao;
+package com.example.migrateproject.dao;
 
-import dal.IUser;
-import model.User;
-import dal.ICatefory_Car;
+import com.example.migrateproject.dal.IUser;
+import com.example.migrateproject.model.User;
 import java.util.ArrayList;
-import java.util.List;
-import model.Category_Car;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  *
  * @author hieun
  */
-public class UserDAO extends DBContext implements IUser{
+public class UserDAO extends DBContext implements IUser {
 
     @Override
     public User getUserLogin(String userName, String password) {

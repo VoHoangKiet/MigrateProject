@@ -2,25 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dao;
+package com.example.migrateproject.dao;
 
-import dal.IAutomaker;
+import com.example.migrateproject.dal.IAutomaker;
 import java.util.ArrayList;
-import model.Automaker;
-import model.User;
-import dal.ICatefory_Car;
-import java.util.ArrayList;
-import java.util.List;
-import model.Category_Car;
+import com.example.migrateproject.model.Automaker;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  *
  * @author hieun
  */
-public class AutomakerDAO extends DBContext implements IAutomaker{
+public class AutomakerDAO extends DBContext implements IAutomaker {
 
     @Override
     public ArrayList<Automaker> getAllAutomaker() {

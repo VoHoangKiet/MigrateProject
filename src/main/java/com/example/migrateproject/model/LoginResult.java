@@ -2,16 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package model;
+package com.example.migrateproject.model;
 
-import Status.StatusLogin;
+import com.example.migrateproject.Status.StatusLogin;
 
 /**
  *
  * @author hieun
  */
 public class LoginResult {
-    private Status.StatusLogin status;
+    private StatusLogin status;
     private User user;
 
     public LoginResult() {

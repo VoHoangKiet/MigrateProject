@@ -3,39 +3,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller;
+package com.example.migrateproject.controller;
 
-import Status.StatusLogin;
-import dao.UserDAO;
+import com.example.migrateproject.Status.StatusLogin;
+import com.example.migrateproject.dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.LoginResult;
-import model.ReturnData;
-import model.User;
+
+import com.example.migrateproject.model.ReturnData;
+import com.example.migrateproject.validate.Validate;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.*;
+import com.example.migrateproject.model.LoginResult;
+import com.example.migrateproject.model.User;
 
 /**
  *
  * @author hieun
  */
 public class LoginServlet extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -74,26 +65,26 @@ public class LoginServlet extends HttpServlet {
     throws ServletException, IOException {
         String userName=request.getParameter("username");
         String password=request.getParameter("password");
-        ReturnData userNameCheck=validate.Validate.inputIsNull(userName);
+        ReturnData userNameCheck= Validate.inputIsNull(userName);
+
         if(userNameCheck.getReturnCode()==1){
             request.setAttribute("errorMessageUserName", userNameCheck.getReturnMessage());
             request.getRequestDispatcher("/hondaotog3.com/login.jsp").forward(request, response);
         }
-        ReturnData passwordCheck=validate.Validate.inputIsNull(password);
+        ReturnData passwordCheck= Validate.inputIsNull(password);
         if(passwordCheck.getReturnCode()==1){
             request.setAttribute("errorMessagePassword", userNameCheck.getReturnMessage());
             request.getRequestDispatcher("/hondaotog3.com/login.jsp").forward(request, response);
         }
-        HttpSession session=request.getSession();
-        LoginResult l=checkLogin(userName, password);
-        if(l.getStatus()==StatusLogin.LoginSucess){
-            // set data user trên cookie
-            session.setAttribute("user", l.getUser());
+        LoginResult l= checkLogin(userName, password);
+        if(l.getStatus() == StatusLogin.LoginSucess){
+            Cookie userCookie = new Cookie("username", l.getUser().getUser_name());
+            userCookie.setMaxAge(60 * 60 * 24); // Cookie tồn tại trong 1 ngày (đơn vị giây)
+            response.addCookie(userCookie);
             switch (l.getUser().getRole_id()) {
                 case 1:
                     request.setAttribute("user", l.getUser());
                     request.getRequestDispatcher("/hondaotog3.com/index.jsp").forward(request, response);
-//                    request.getRequestDispatcher("/hondaotog3.com/index.jsp").forward(request, response);
                     break;
                     case 2:
                     request.getRequestDispatcher("/hondaotog3.com/index.jsp").forward(request, response);
@@ -108,8 +99,8 @@ public class LoginServlet extends HttpServlet {
         
     }
 
-    public model.LoginResult checkLogin(String userName,String password){
-        String passBam=validate.Validate.getEncryptString(password).toString();
+    public LoginResult checkLogin(String userName,String password){
+        String passBam= Validate.getEncryptString(password).toString();
         UserDAO dao=new UserDAO();
         User u=dao.getUserLogin(userName, passBam);
         if(u!=null){
